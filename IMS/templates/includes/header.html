@@ -1,0 +1,117 @@
+{% load static %}
+
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3 mx-3" href="{% url 'index' %}">
+        <img src="/static/images/logo2.png" alt="Logo" height="40px" width="120px">
+    </a>
+    
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fas fa-bars"></i></button>
+
+
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline text-capitalize" style="color: #fff; font-weight: bolder;"> 
+                        {% if name %}
+                            {{name}}
+                        {% else%}
+                            User
+                        {% endif %}</span>
+                    <img class="img-profile rounded-circle" src="/static/images/user.png" width="20" height="20" style="background-color: #fff;">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    
+                    {% if request.user.is_superuser %}
+                    <li><a class="dropdown-item" href="{% url 'admin:index' %}" target ="_blank">Admin page</a></li>
+                    {% endif %}
+                    <li>
+                        {% comment %} <hr class="dropdown-divider" /> {% endcomment %}
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </form>
+</nav>
+
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading"></div>
+                    
+                    {% with url_name=request.resolver_match.url_name %}
+
+                    <a class="nav-link mt-4 {% if url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+                        Home
+                    </a>
+
+                    <a class="nav-link mt-2 {% if url_name == 'vendors' %}active{% endif %}" href="{% url 'vendors' %}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                        Vendors
+                    </a>
+
+                    <a class="nav-link mt-2 {% if url_name == 'units' %}active{% endif %}" href="{% url 'units' %}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-crosshairs"></i></div>
+                        Units
+                    </a>
+
+                    <a class="nav-link mt-2 {% if url_name == 'products' %}active{% endif %}" href="{% url 'products' %}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-cutlery"></i></div>
+                        Products
+                    </a>
+
+                    <a class="nav-link mt-2 collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+                        aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fa fa-rectangle-list"></i></div>
+                        Purchases
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="{% if url_name != 'new-purchase' %}collapse{% endif %}" id="collapseLayouts" aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link {% if url_name == 'new-purchase' %}active{% endif %}" href="{% url 'new-purchase' %}">New Purchase Order</a>
+                            <a class="nav-link {% if url_name == 'purchases' %}active{% endif %}" href="{% url 'purchases' %}">Purchases List</a>
+                        </nav>
+                    </div>
+
+                    <a class="nav-link mt-2 collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1"
+                        aria-expanded="false" aria-controls="collapseLayouts1">
+                        <div class="sb-nav-link-icon"><i class="fa fa-dollar-sign"></i></div>
+                        Sales
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                     </a>
+                    <div class="{% if url_name != 'new-sale' %}collapse{% endif %}" id="collapseLayouts1" aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link {% if url_name == 'new-sale' %}active{% endif %}" href="{% url 'new-sale' %}">New Sale Order</a>
+                            <a class="nav-link {% if url_name == 'sales' %}active{% endif %}" href="{% url 'sales' %}">Sales orders</a>
+
+                        </nav>
+                    </div>
+
+
+                    <a class="nav-link mt-2 {% if url_name == 'inventory' %}active{% endif %}" href="{% url 'inventory' %}">
+                        <div class="sb-nav-link-icon"><i class="fa fa-line-chart"></i></div>
+                        Inventory
+                    </a>
+
+
+                    {% endwith %}
+
+                </div>
+            </div>
+        </nav>
+    </div>
+

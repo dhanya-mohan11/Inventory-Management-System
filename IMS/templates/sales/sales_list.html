@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %} Sales {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Sales</h1>
+
+            <div class="d-flex justify-content-between">
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Sales</li>
+                </ol>
+            </div>
+
+            <div class="card mb-4 text-primary">
+                <div class="card-header">
+                    <i class="fa fa-dollar-sign"></i>
+                    Sales
+                </div>
+
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        
+                        <thead>
+                            <tr>
+                                <th width="5%">Id</th>
+                                <th width="15%">Product</th>
+                                <th width="15%">Invoice No</th>
+                                <th width="15%">Quantity</th>
+                                <th width="15%">Price</th>
+                                <th width="15%">Total price</th>
+                                <th width="15%">Customer Name</th>
+                                <th width="15%">Customer Phone</th>
+                                <th width="15%">Sale Date</th>
+                                <th width="15%">View Bill</th>
+                               
+                            </tr>
+                        </thead>
+                        
+                        {% if object_list %}
+
+                        <tbody>
+                        {% for i in object_list %}
+
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{i.product}}</td>
+                                <td>INV{{i.billno}}</td>
+                                <td>{{i.quantity|floatformat}}</td>
+                                <td>{{i.price}}</td>
+                                <td>{{i.total_amount}}</td>
+                                <td>{{i.customer_name }}</td>
+                                <td>{{i.customer_phone }}</td>
+                                <td>{{i.sale_date}}</td>
+                                <td><a href="{% url 'sale-bill' i.billno %}" class="btn ghost-button"><i class="fas fa-file-invoice" style="color: #0fa8e2;"></i></a>
+                               
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                        {%  else %}
+                        <tbody></tbody> 
+                    </table>
+                    {% endif %}
+
+                </div>
+               
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

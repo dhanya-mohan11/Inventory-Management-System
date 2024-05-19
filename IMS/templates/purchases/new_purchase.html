@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %} Purchases {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Purchases</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'units' %}">New Purchase Order</a></li>
+            </ol>
+           
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fa fa-rectangle-list"></i>
+                    Purchases
+                </div>
+
+                <div class="card-body">
+                  
+                    <div style="color:#0fa8e2; font-style: bold; font-size: 2rem; border-bottom: 1px solid white;">New Purchase</div> <br>
+                    
+                    <form method="post">
+                    
+                        {% csrf_token %}
+                         
+                        <div class="form-group">
+                            <label for="{{ form.product.id_for_label }}">Product:</label>
+                            {{ form.product }}
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="{{ form.vendor.id_for_label }}">Vendor:</label>
+                            {{ form.vendor }}
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
+                            {{ form.quantity }}
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="{{ form.price.id_for_label }}">Price:</label>
+                            {{ form.price }}
+                        </div>
+                        <br>
+
+                        <div class="align-middle">
+                            <button type="submit" class="btn btn-primary">Create Order</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main> 
+{% comment %} </div> {% endcomment %}
+
+{% endblock %}

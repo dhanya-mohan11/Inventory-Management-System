@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %} Units {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Units</h1>
+
+            <div class="d-flex justify-content-between">
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Units</li>
+                </ol>
+                <a class="btn btn-primary mb-4" style="background-color: #0fa8e2" href="{% url 'new-unit' %}">Add Unit</a>
+            </div>
+
+            <div class="card mb-4 text-primary">
+                <div class="card-header">
+                    <i class="fas fa-crosshairs"></i>
+                    Units
+                </div>
+
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        
+                        <thead>
+                            <tr>
+                                <th width="5%">Id</th>
+                                <th width="15%">Name</th>
+                                <th width="15%">Short name</th>
+                                <th width="15%">Edit</th>
+                                <th width="20%">Delete</th> 
+                            </tr>
+                        </thead>
+                        
+                        {% if object_list %}
+
+                        <tbody>
+                        {% for i in object_list %}
+
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{i.name}}</td>
+                                <td>{{i.short_name}}</td>
+                                <td><a href="{% url 'update-unit' i.pk %}" class="btn ghost-button"><i class="fa fa-edit" style="color: #0fa8e2"></i></a>
+                                </td>
+                                <td>
+                               
+                                <button 
+                                    id='btn-delete' 
+                                    class="btn ghost-button" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modal-delete" 
+                                    data-bs-name='{{ i }}' 
+                                    data-bs-url="{% url 'delete-unit' i.pk %}">
+                                    <i class="fa fa-trash" style="color:red"></i>
+                                </button>
+                            </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                        {%  else %}
+                        <tbody></tbody> 
+                    </table>
+                    {% endif %}
+
+                </div>
+               
+            </div>
+        </div>
+    </main>
+</div>  
+<div id="modal-delete" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form>
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const deleteModal = document.getElementById('modal-delete');
+
+    deleteModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const name = button.getAttribute('data-bs-name');
+        const url = button.getAttribute('data-bs-url');
+        const modalBodyInput = deleteModal.querySelector('.modal-body ');
+
+        modalBodyInput.textContent = `Are you sure you want to delete the unit "${name}" ? `;
+
+        const deleteForm= deleteModal.querySelector('form');
+        deleteForm.setAttribute('action', url);
+        deleteForm.setAttribute('method', 'post');
+    });
+</script>
+{% endblock %}

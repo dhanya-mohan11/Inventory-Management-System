@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Dashboard</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active"></li>
+                </ol>
+                
+                
+                <!-- Content Row -->
+                <div class="row">
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-large font-weight-bold text-primary text-uppercase mb-1" style="font-size:20px; font-weight:bolder">
+                                            Sales</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ sales }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size:20px; font-weight:bolder">
+                                            Purchases</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ purchases }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa fa-rectangle-list fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size:20px; font-weight:bolder">Products
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ products }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-cutlery fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Requests Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size:20px; font-weight:bolder">
+                                            Vendors</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ vendors }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-user fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <br>
+
+                <div class="card mb-4 text-primary">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Low Stock Items
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>PRODUCT</th>
+                                    <th>STOCK</th>
+                                    <th>ADD STOCK</th>
+                                    
+                                </tr>
+                            </thead>
+                            {% if low_stock  %}
+                            <tbody>
+                            {% for i in low_stock  %}
+                            
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{i.product}}</td>
+                                    <td>{{i.total_balance_quantity|floatformat}}</td>
+                                    <td><a href="{% url 'new-purchase' %}" class="btn btn-primary" type="button" style="width: 40px; height:35px;"><i class="fa fa-plus"></i></a>
+                                    
+                                </tr>
+                            {% endfor %}
+                            
+                            </tbody>
+
+                            {%  else %}
+                            <tbody></tbody> 
+                        
+                        {% endif %}
+                        </table>
+                    </div>
+                </div>
+
+
+
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="d-flex align-items-center justify-content-between small" style="padding-left:300px;">
+                        <p>Copyright &copy;2024 <span style="color:#0fa8e2; font-weight:bolder;">Inventory Management System </span> 
+                            &nbsp; All Rights Reserved &nbsp;|&nbsp; Made with &nbsp;<i class="fa fa-heart" aria-hidden="true" style="color:red;"></i>&nbsp; by <span style="color:#0fa8e2; font-weight:bolder;">Dhanya</span></p>       
+                    </div>
+                </footer> 
+                
+            </div>
+        </main>
+        
+
+{% endblock %}
